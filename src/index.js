@@ -11,6 +11,8 @@ dotenv.config();
 const {DATABASE_URL}=process.env;
 const PORT =process.env.PORT || 8000;
 
+
+
 //exit on mongodb error
 mongoose.connection.on('error',(err)=>{
     logger.error(`MongoDB connection error ${err}`)

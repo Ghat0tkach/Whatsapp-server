@@ -21,6 +21,7 @@ if(process.env.NODE_ENV !== "production"){
 app.use(helmet())
 
 //parse json request  body
+app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 //sanitize request data
