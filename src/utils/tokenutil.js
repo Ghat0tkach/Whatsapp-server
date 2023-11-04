@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import logger from "../configs/logger.config.js";
+
 export const sign=async (payload,expiresIn,secret)=>{
     return new Promise((resolve,reject)=>{
        jwt.sign(payload,secret,
@@ -14,3 +15,17 @@ export const sign=async (payload,expiresIn,secret)=>{
         })
     })
 };
+
+
+export const verify=async(token,secret)=>{
+    return new Promise((resolve,reject)=>{
+        jwt.verify(token,secret,(error,payload)=>{
+            if(error){
+                logger.error(error);
+                resolve(null)
+            }else{
+                resolve(payload);
+            }
+        })
+    })
+}
