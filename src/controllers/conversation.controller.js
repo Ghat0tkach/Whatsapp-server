@@ -1,6 +1,6 @@
 import createHttpError from "http-errors";
 import logger from "../configs/logger.config.js";
-import { createConversation, doesConversationExist, getUserConversations } from "../services/conversation.service.js";
+import { createConversation, doesConversationExist, getUserConversations, populateConversation } from "../services/conversation.service.js";
 import { findUser } from "../services/user.service.js";
 
 export const create_open_conversation=async(req,res,next)=>{
@@ -21,12 +21,14 @@ export const create_open_conversation=async(req,res,next)=>{
             sender_id,
             receiver_id
         );
+
         if(existed_conversation){
             res.json(existed_conversation)
         } else{
             let receiver_user=await findUser(receiver_id);
             let convoData={
-                name: receiver_user.name ,
+                name:"conversation name" ,
+                picture:"conversation picture",
                 isGroup:false,
                 users:[sender_id,receiver_id], 
             }; 

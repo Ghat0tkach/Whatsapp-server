@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 import app from "./app.js"
 import dotenv from "dotenv"
 import logger from "./configs/logger.config.js";
-
+import { Server } from "socket.io";
+import SocketServer from "./SocketServer.js";
 
 //dotEnv config
 dotenv.config();
@@ -38,6 +39,19 @@ server= app.listen(PORT,()=>{
     logger.info(`Server has started on port ${PORT}`,)
     console.log("process id",process.pid)
 });
+// Socket Io
+const io=new Server(server,
+    {
+        pingTimeout:60000,
+        cors:{
+            origin:process.env.REACT_APP_CLIENT_API_ENDPOINT,
+        }
+    });
+
+io.on("connection",(socket)=>{
+    logger.info("Socket io connected successfully"),
+    SocketServer(socket,io)
+})    
 
 
 // handle server errors
