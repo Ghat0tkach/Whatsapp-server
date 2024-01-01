@@ -29,6 +29,7 @@ if(process.env.NODE_ENV!=="production"){
 mongoose.connect(DATABASE_URL,{
     useNewUrlParser:true,
     useUnifiedTopology:true,
+    serverSelectionTimeoutMS:30000,
 }).then(()=>{
     logger.info("Connected to MONGODB")
 })
